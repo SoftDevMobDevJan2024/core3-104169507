@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import au.edu.swin.sdmd.myapp.model.Group
 
@@ -45,7 +46,25 @@ class RecyclerListAdapter(private var data: List<Group>) : RecyclerView.Adapter<
     }
 
     fun updateData(newData: List<Group>) {
+        val diffCallback = object : DiffUtil.Callback() {
+            override fun getOldListSize(): Int {
+                return data.size
+            }
+
+            override fun getNewListSize(): Int {
+                return newData.size
+            }
+
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return data[oldItemPosition] == newData[newItemPosition]
+            }
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return data[oldItemPosition] == newData[newItemPosition]
+            }
+        }
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         data = newData
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 }

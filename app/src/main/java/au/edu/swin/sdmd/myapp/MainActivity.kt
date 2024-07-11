@@ -13,6 +13,7 @@ import java.io.InputStreamReader
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+
 class MainActivity : AppCompatActivity() {
   private lateinit var recyclerView : RecyclerView
   private lateinit var adapter: RecyclerListAdapter
@@ -26,12 +27,12 @@ class MainActivity : AppCompatActivity() {
     actionBar.subtitle = " Swinburne Club List"
     val groups = readGroups(this)
     sortedGroups = groups.sortedBy { it.dateTime }
-
     recyclerView = findViewById(R.id.recyclerView)
     recyclerView.layoutManager = LinearLayoutManager(this)
     recyclerView.setHasFixedSize(true)
     adapter = RecyclerListAdapter(sortedGroups)
     recyclerView.adapter = adapter
+
   }
   override fun onOptionsItemSelected(item: MenuItem): Boolean {
     return when (item.itemId) {
